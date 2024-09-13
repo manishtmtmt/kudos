@@ -51,3 +51,25 @@ export const getFilteredKudos = async (
     },
   });
 };
+
+export const getRecentKudos = async () => {
+  return await db.kudo.findMany({
+    take: 3,
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      style: {
+        select: {
+          emoji: true,
+        },
+      },
+      author: {
+        select: {
+          id: true,
+          profile: true,
+        },
+      },
+    },
+  });
+};
